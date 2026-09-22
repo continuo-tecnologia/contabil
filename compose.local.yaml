@@ -1,0 +1,5 @@
+# Laptop: also reachable without Traefik at http://127.0.0.1:8082 (the SPA proxies /api/ to the API)
+services:
+  app:
+    ports:
+      - "127.0.0.1:8082:80"

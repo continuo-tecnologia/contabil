@@ -1,0 +1,65 @@
+# contabil: React SPA (nginx) + Express API + MongoDB. The SPA container proxies /api/ to the API,
+# so only `app` is routed (Traefik labels, office IPs only) and the API and DB stay private.
+# Edge, shared network and the defaults this file extends: /srv/infra-core (CLAUDE.md there).
+name: contabil
+
+services:
+  app:
+    extends:
+      file: "${CTN_PLATFORM_DIR:-../infra-core}/compose.defaults.yaml"
+      service: _defaults
+    build: ./web
+    image: contabil-web:${TAG:-latest}
+    container_name: contabil
+    depends_on:
+      api: { condition: service_started }
+    networks: [default, shared]
+    mem_limit: ${APP_MEM_LIMIT:-32m}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: shared
+      traefik.http.routers.contabil.rule: "Host(`contabil.${DOMAIN:?}`)"
+      traefik.http.routers.contabil.middlewares: office-allowlist@file
+      traefik.http.services.contabil.loadbalancer.server.port: "80"
+
+  api:
+    extends:
+      file: "${CTN_PLATFORM_DIR:-../infra-core}/compose.defaults.yaml"
+      service: _defaults
+    build: ./backend
+    image: contabil-api:${TAG:-latest}
+    container_name: contabil-api
+    environment:
+      MONGO_URL: mongodb://db:27017/contabil
+      PORT: "3333"
+    depends_on:
+      db: { condition: service_started }
+    mem_limit: ${API_MEM_LIMIT:-256m}
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 3333 || exit 1"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  db:
+    extends:
+      file: "${CTN_PLATFORM_DIR:-../infra-core}/compose.defaults.yaml"
+      service: _defaults
+    image: mongo:4.4
+    container_name: contabil-db
+    volumes:
+      - contabil-mongo-data:/data/db
+    mem_limit: ${DB_MEM_LIMIT:-512m}
+
+networks:
+  shared:
+    external: true
+
+volumes:
+  contabil-mongo-data:
