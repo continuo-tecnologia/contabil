@@ -5,6 +5,7 @@ import type { ReadTableRow } from '@ctn/base/casa';
 import { operacoesDoMes } from '../lib/api';
 import { competenciaDe, mesesEntre, rotuloDoMes } from '../lib/competencia';
 import type { Competencia } from '../lib/competencia';
+import { faltaReceberOuPagar } from '../lib/derivados';
 import { movimentosDe, porMes, realizadoEAReceber, soma } from '../lib/fluxo';
 import type { Movimento, Operacao } from '../lib/fluxo';
 import { Mes } from '../components/Mes';
@@ -46,6 +47,7 @@ export function FluxoDeCaixa({ desde, onDesde, hoje = new Date() }: { desde: Com
     const today = hoje.toISOString().slice(0, 10);
     const split = useMemo(() => realizadoEAReceber(movements, today), [movements, today]);
     const per_month = useMemo(() => porMes(movements), [movements]);
+    const falta = useMemo(() => faltaReceberOuPagar(operations ?? [], today), [operations, today]);
     const cut = months.length > TETO_DE_MESES;
 
     const row = (item: Movimento): ReadTableRow => ({
@@ -82,6 +84,22 @@ export function FluxoDeCaixa({ desde, onDesde, hoje = new Date() }: { desde: Com
                             </Box>
                         )}
                     </Block>
+
+                    {falta.length > 0 && (
+                        <Block title='Falta receber ou pagar'>
+                            <ReadTable label='Falta receber ou pagar por mês de competência' data-testid='falta' limit={Infinity} head={['Competência', 'Falta receber', 'Falta pagar', 'Sem parcelas']} align={['left', 'right', 'right', 'right']}
+                                rows={falta.map(item => ({
+                                    key: item.mes,
+                                    cells: [
+                                        mesDe(`${item.mes}-01`),
+                                        item.aReceber === undefined ? <Absence key='r' variant='cell' title='Sem entrada com parcelas'/> : brl(item.aReceber),
+                                        item.aPagar === undefined ? <Absence key='p' variant='cell' title='Sem saída com parcelas'/> : brl(item.aPagar),
+                                        item.semParcelas === 0 ? '—' : `${item.semParcelas} ${item.semParcelas === 1 ? 'operação' : 'operações'}`,
+                                    ],
+                                }))}/>
+                            <Typography variant='caption' color='text.secondary'>É o valor da operação menos o que as parcelas já moveram até hoje. Operação sem parcela não tem como dizer o que falta e fica fora da soma.</Typography>
+                        </Block>
+                    )}
 
                     {movements.length > 0 && (
                         <Block title='Parcelas'>

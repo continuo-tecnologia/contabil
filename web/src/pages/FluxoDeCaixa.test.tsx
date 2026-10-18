@@ -57,6 +57,19 @@ describe('o fluxo de caixa', () => {
         expect(screen.getByTestId('parcelas').textContent).toContain('A realizar');
     });
 
+    it('mostra o que falta receber e pagar por mês de competência, derivado do que já se moveu', async () => {
+
+        vi.mocked(api.operacoesDoMes).mockResolvedValue([...operacoes, { _id: 's', name: 'Sem parcela', category: 'CO_CSP_MAT', value: 50, competence_date: '2026-03-01T00:00:00.000Z', cash_flow: [] }]);
+        show(<FluxoDeCaixa desde={{ year: 2026, month: 3 }} onDesde={() => undefined} hoje={HOJE}/>);
+
+        const table = await screen.findByTestId('falta');
+
+        // receita 1000 com 400 movidos: falta receber 600; custo 300 com 300 movidos: falta pagar 0 (há parcela); a operação sem parcela é dita, não somada
+        expect(table.textContent).toContain('Março de 2026');
+        expect(table.textContent).toContain('600,00');
+        expect(table.textContent).toContain('1 operação');
+    });
+
     it('um mês inicial no futuro diz isso e não lê nada', async () => {
 
         show(<FluxoDeCaixa desde={{ year: 2026, month: 8 }} onDesde={() => undefined} hoje={HOJE}/>);
