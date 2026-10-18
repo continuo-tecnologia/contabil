@@ -342,6 +342,11 @@
                     "id": "fluxo-de-caixa",
                     "rotulo": "Fluxo de caixa",
                     "caminho": "/fluxo-de-caixa"
+                },
+                {
+                    "id": "notas",
+                    "rotulo": "Notas fiscais",
+                    "caminho": "/notas"
                 }
             ]
         },

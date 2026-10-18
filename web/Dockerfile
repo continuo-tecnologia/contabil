@@ -1,5 +1,5 @@
 # O app de financeiro.<domínio>: Vite + React 19 + TypeScript sobre o kit @ctn/base (que vem do tarball em vendor/, sem credencial do GitHub),
-# compilado em arquivos estáticos e servido por nginx, que também repassa /api/ à API.
+# compilado em arquivos estáticos e servido por nginx, que também repassa /api/ à API e, com senha, /notas/api/ ao OWP (default.conf.template).
 FROM node:22-alpine AS build
 
 WORKDIR /app
@@ -16,4 +16,4 @@ RUN npm run build
 FROM nginx:alpine
 
 COPY --from=build /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY default.conf.template /etc/nginx/templates/default.conf.template

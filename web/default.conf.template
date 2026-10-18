@@ -1,8 +1,18 @@
+# Modelo do nginx do financeiro. (/etc/nginx/templates/default.conf.template): a imagem do nginx troca as duas variáveis marcadas com cifrão e chaves (token e domínio) pelas do
+# contêiner ao subir (só as variáveis definidas; o resto, como $host, fica como está). O valor do token vem do .env do servidor, nunca do git.
+
+# Notas fiscais para a Colinear (docs/notas-colinear.md): é a única parte do financeiro. aberta fora do escritório, por usuário e senha. O Traefik
+# deixa passar só /notas e os arquivos estáticos da tela (compose.yaml); todo o resto continua só por IP do escritório.
+limit_req_zone $binary_remote_addr zone=notas:1m rate=5r/s;
+
 server {
     listen 80;
     server_name _;
     root /usr/share/nginx/html;
     index index.html;
+
+    # O Docker resolve o nome do OWP a cada pedido: o nginx sobe mesmo com o OWP fora do ar.
+    resolver 127.0.0.11 valid=10s ipv6=off;
 
     # API: same origin for the SPA, so the build needs no absolute URL (REACT_APP_API_URL=/api).
     # The trailing slash strips the /api prefix before handing the request to the API container.
@@ -13,6 +23,49 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+    }
+
+    # A tela de notas fiscais: a página é a mesma do app (index.html), mas só abre com usuário e senha.
+    location ~ ^/notas/?$ {
+        auth_basic "Notas fiscais";
+        auth_basic_user_file /etc/nginx/notas.htpasswd;
+        limit_except GET HEAD { deny all; }
+        limit_req zone=notas burst=20 nodelay;
+        limit_req_status 429;
+        add_header Cache-Control "private, no-store" always;
+        add_header X-Robots-Tag "noindex, nofollow" always;
+        try_files /index.html =404;
+    }
+
+    # A leitura das notas: repassa ao OWP (rede `shared`, contêiner workforce-manager) SÓ os três caminhos da rota de máquina do leitor `financeiro`:
+    #   /notas/api/meses.json, /notas/api/<AAAA-MM>.json e /notas/api/arquivo/<sha256>.pdf
+    # O token do leitor é posto aqui, no servidor; o navegador nunca o vê. O que o navegador mandou (Authorization de basic auth, Cookie) é descartado.
+    # Qualquer outro caminho sob /notas/api/ cai no bloco seguinte (404): nunca chega ao OWP.
+    location ~ "^/notas/api/(?<alvo>meses\.json|[0-9]{4}-[0-9]{2}\.json|arquivo/[0-9a-f]{64}\.pdf)$" {
+        auth_basic "Notas fiscais";
+        auth_basic_user_file /etc/nginx/notas.htpasswd;
+        limit_except GET HEAD { deny all; }
+        limit_req zone=notas burst=20 nodelay;
+        limit_req_status 429;
+
+        set $owp "workforce-manager";
+        proxy_pass http://$owp/interfaces/v1/notas/$alvo;
+        proxy_http_version 1.1;
+        proxy_set_header Host "owp.${DOMAIN}";
+        proxy_set_header Authorization "Bearer ${OWP_NOTAS_TOKEN}";
+        proxy_set_header Cookie "";
+        proxy_set_header X-Auth-Request-User "";
+        proxy_set_header X-Wfm-Address "";
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
+        proxy_hide_header Set-Cookie;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "private, no-store" always;
+        add_header X-Robots-Tag "noindex, nofollow" always;
+    }
+
+    location /notas/ {
+        return 404;
     }
 
     # SPA fallback: serve index.html for all non-file routes
