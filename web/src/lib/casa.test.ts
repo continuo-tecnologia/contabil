@@ -1,0 +1,23 @@
+import { describe, expect, it } from 'vitest';
+import casa from '../data/casa.json';
+import { enderecoDoFinanceiro, secaoDoCaminho } from './casa';
+import type { Casa } from './casa';
+
+describe('o mapa da casa deste app', () => {
+
+    const here = enderecoDoFinanceiro(casa as unknown as Casa);
+
+    it('financeiro. tem a DRE e o fluxo de caixa, nessa ordem', () => {
+
+        expect(here.host).toMatch(/^financeiro\./);
+        expect(here.secoes.map(secao => secao.id)).toEqual(['dre', 'fluxo-de-caixa']);
+    });
+
+    it('o caminho acha a seção, com ou sem barra final', () => {
+
+        expect(secaoDoCaminho(here, '/')?.id).toBe('dre');
+        expect(secaoDoCaminho(here, '/fluxo-de-caixa')?.id).toBe('fluxo-de-caixa');
+        expect(secaoDoCaminho(here, '/fluxo-de-caixa/')?.id).toBe('fluxo-de-caixa');
+        expect(secaoDoCaminho(here, '/outra')).toBeUndefined();
+    });
+});

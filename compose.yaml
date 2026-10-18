@@ -1,5 +1,7 @@
-# contabil: React SPA (nginx) + Express API + MongoDB. The SPA container proxies /api/ to the API,
-# so only `app` is routed (Traefik labels, office IPs only) and the API and DB stay private.
+# financeiro (ex-contabil): React SPA (nginx) + Express API + MongoDB. The SPA container proxies /api/ to the API,
+# so only `app` is routed (Traefik labels, office IPs only) and the API and DB stay private. The address is financeiro.<DOMAIN>;
+# contabil.<DOMAIN>, the one before, answers 301 to the same path there. Compose project, container, image and volume names
+# keep "contabil" on purpose: the Mongo volume (the data) must not change name.
 # Edge, shared network and the defaults this file extends: /srv/infra-core (CLAUDE.md there).
 name: contabil
 
@@ -23,9 +25,17 @@ services:
     labels:
       traefik.enable: "true"
       traefik.docker.network: shared
+      traefik.http.routers.financeiro.rule: "Host(`financeiro.${DOMAIN:?}`)"
+      traefik.http.routers.financeiro.middlewares: office-allowlist@file
+      traefik.http.routers.financeiro.service: financeiro
+      traefik.http.services.financeiro.loadbalancer.server.port: "80"
+      # The address before the rename: the same office-IP gate, then a permanent redirect (301) to the same path and query.
       traefik.http.routers.contabil.rule: "Host(`contabil.${DOMAIN:?}`)"
-      traefik.http.routers.contabil.middlewares: office-allowlist@file
-      traefik.http.services.contabil.loadbalancer.server.port: "80"
+      traefik.http.routers.contabil.middlewares: office-allowlist@file,contabil-para-financeiro
+      traefik.http.routers.contabil.service: financeiro
+      traefik.http.middlewares.contabil-para-financeiro.redirectregex.regex: "^https?://contabil\\.([^/]+)/?(.*)"
+      traefik.http.middlewares.contabil-para-financeiro.redirectregex.replacement: "https://financeiro.$${1}/$${2}"
+      traefik.http.middlewares.contabil-para-financeiro.redirectregex.permanent: "true"
 
   api:
     extends:

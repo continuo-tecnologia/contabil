@@ -1,0 +1,716 @@
+{
+    "schema": 1,
+    "marca": {
+        "nome": "Contínuo Tecnologia",
+        "cores": {
+            "primaria": "#257FD8",
+            "secundaria": "#2FA44A",
+            "claro": {
+                "fundo": "#F5F7F9",
+                "superficie": "#FFFFFF",
+                "texto": "#0F1720",
+                "texto_secundario": "#3A4654"
+            },
+            "escuro": {
+                "fundo": "#0B1118",
+                "superficie": "#121B25",
+                "texto": "rgba(255, 255, 255, 0.92)",
+                "texto_secundario": "rgba(255, 255, 255, 0.64)"
+            }
+        },
+        "fontes": {
+            "texto": "Inter, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+            "titulo": "Rajdhani, system-ui, sans-serif",
+            "mono": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        },
+        "raio": 6
+    },
+    "enderecos": [
+        {
+            "id": "www",
+            "host": "www.continuo.dev.br",
+            "peca": "www",
+            "audiencia": "público",
+            "login": null,
+            "no_ar": true,
+            "secoes": [
+                {
+                    "id": "apresentacao",
+                    "rotulo": "Apresentação",
+                    "caminho": "/apresentacao/"
+                },
+                {
+                    "id": "servicos",
+                    "rotulo": "Serviços",
+                    "caminho": "/servicos/"
+                },
+                {
+                    "id": "niveis",
+                    "rotulo": "Níveis",
+                    "caminho": "/niveis/"
+                },
+                {
+                    "id": "prova",
+                    "rotulo": "Prova",
+                    "caminho": "/prova/"
+                },
+                {
+                    "id": "contato",
+                    "rotulo": "Contato",
+                    "caminho": "/contato/"
+                },
+                {
+                    "id": "acessos",
+                    "rotulo": "Acessos",
+                    "caminho": "/acessos/"
+                }
+            ]
+        },
+        {
+            "id": "idp",
+            "host": "idp.continuo.dev.br",
+            "peca": "IDP",
+            "audiencia": "equipe",
+            "login": "github",
+            "no_ar": true,
+            "secoes": [
+                {
+                    "id": "visao-geral",
+                    "rotulo": "Visão Geral",
+                    "caminho": "/"
+                },
+                {
+                    "id": "entregas",
+                    "rotulo": "Entregas",
+                    "caminho": "/entregas/"
+                },
+                {
+                    "id": "confiabilidade",
+                    "rotulo": "Confiabilidade",
+                    "caminho": "/confiabilidade/"
+                },
+                {
+                    "id": "inventario",
+                    "rotulo": "Inventário e custos",
+                    "caminho": "/inventario/"
+                }
+            ],
+            "fora_do_menu": [
+                {
+                    "id": "clientes",
+                    "rotulo": "Clientes e apps",
+                    "caminho": "/clientes/"
+                },
+                {
+                    "id": "perfis",
+                    "rotulo": "Perfis",
+                    "caminho": "/perfis/"
+                }
+            ]
+        },
+        {
+            "id": "owp",
+            "host": "owp.continuo.dev.br",
+            "peca": "OWP",
+            "audiencia": "equipe",
+            "login": "github",
+            "no_ar": true,
+            "secoes": [
+                {
+                    "id": "visao-geral",
+                    "rotulo": "Visão Geral",
+                    "caminho": "/"
+                },
+                {
+                    "id": "central",
+                    "rotulo": "Planejamento & Produção",
+                    "caminho": "/central"
+                },
+                {
+                    "id": "atendimento",
+                    "rotulo": "Atendimento",
+                    "caminho": "/atendimento"
+                },
+                {
+                    "id": "contrato-entregue",
+                    "rotulo": "Contrato × entregue",
+                    "caminho": "/contrato-entregue"
+                },
+                {
+                    "id": "pessoas",
+                    "rotulo": "Pessoas",
+                    "caminho": "/pessoas"
+                },
+                {
+                    "id": "comercial",
+                    "rotulo": "Comercial",
+                    "caminho": "/comercial"
+                },
+                {
+                    "id": "financeiro",
+                    "rotulo": "Financeiro",
+                    "caminho": "/financeiro"
+                },
+                {
+                    "id": "reguas",
+                    "rotulo": "Réguas",
+                    "caminho": "/reguas"
+                },
+                {
+                    "id": "decisoes",
+                    "rotulo": "Decisões",
+                    "caminho": "/decisoes"
+                }
+            ],
+            "fora_do_menu": [
+                {
+                    "id": "okr",
+                    "rotulo": "Objetivos (OKR)",
+                    "caminho": "/okr"
+                },
+                {
+                    "id": "visao-geral-cliente",
+                    "rotulo": "Visão Geral de um cliente",
+                    "caminho": "/visao-geral"
+                }
+            ],
+            "redireciona": {
+                "/acordos": "contrato-entregue",
+                "/capacidade": "pessoas",
+                "/societario": "financeiro",
+                "/regua/servico": "/reguas/servico",
+                "/regua/servico/escalas": "/reguas/servico/escalas",
+                "/regua/trabalho": "/reguas/trabalho",
+                "/regua/trabalho/escalas": "/reguas/trabalho/escalas",
+                "/manual": "/reguas/manual"
+            }
+        },
+        {
+            "id": "cliente",
+            "host": "cliente.continuo.dev.br",
+            "peca": "Painel do Cliente",
+            "audiencia": "pessoa do cliente",
+            "login": "email",
+            "no_ar": false,
+            "secoes": [
+                {
+                    "id": "visao-geral",
+                    "rotulo": "Visão Geral",
+                    "caminho": "/{chave}/"
+                },
+                {
+                    "id": "planejamento",
+                    "rotulo": "Planejamento & Produção",
+                    "caminho": "/{chave}/planejamento"
+                },
+                {
+                    "id": "solicitacoes",
+                    "rotulo": "Solicitações",
+                    "caminho": "/{chave}/solicitacoes"
+                },
+                {
+                    "id": "confiabilidade",
+                    "rotulo": "Confiabilidade",
+                    "caminho": "/{chave}/confiabilidade"
+                },
+                {
+                    "id": "contrato-entregue",
+                    "rotulo": "Contrato × entregue",
+                    "caminho": "/{chave}/contrato-entregue"
+                },
+                {
+                    "id": "contrato",
+                    "rotulo": "Contrato",
+                    "caminho": "/{chave}/contrato"
+                },
+                {
+                    "id": "avisos",
+                    "rotulo": "Avisos",
+                    "caminho": "/{chave}/avisos"
+                },
+                {
+                    "id": "custos",
+                    "rotulo": "Custos",
+                    "caminho": "/{chave}/custos",
+                    "so_com": "CST"
+                }
+            ],
+            "fora_do_menu": [
+                {
+                    "id": "reportes",
+                    "rotulo": "Reportes",
+                    "caminho": "/{chave}/reportes"
+                }
+            ]
+        },
+        {
+            "id": "parceiro",
+            "host": "parceiro.continuo.dev.br",
+            "peca": "Painel do Parceiro",
+            "audiencia": "Parceiro",
+            "login": "github",
+            "no_ar": true,
+            "secoes": [
+                {
+                    "id": "visao-geral",
+                    "rotulo": "Visão Geral",
+                    "caminho": "/"
+                },
+                {
+                    "id": "trabalho",
+                    "rotulo": "Meu trabalho",
+                    "caminho": "/trabalho"
+                },
+                {
+                    "id": "acordo",
+                    "rotulo": "Meu acordo",
+                    "caminho": "/acordo"
+                },
+                {
+                    "id": "pedidos",
+                    "rotulo": "Pedidos",
+                    "caminho": "/pedidos"
+                }
+            ],
+            "redireciona": {
+                "/alocacao": "acordo",
+                "/equipe": "owp:pessoas"
+            }
+        },
+        {
+            "id": "gestao",
+            "host": "gestao.continuo.dev.br",
+            "peca": "Painel do Sócio",
+            "audiencia": "Sócio",
+            "login": "github",
+            "no_ar": true,
+            "secoes": [
+                {
+                    "id": "visao-geral",
+                    "rotulo": "Visão Geral",
+                    "caminho": "/"
+                },
+                {
+                    "id": "pendencias",
+                    "rotulo": "Pendências e decisões",
+                    "caminho": "/pendencias"
+                }
+            ],
+            "fora_do_menu": [
+                {
+                    "id": "financeiro",
+                    "rotulo": "Financeiro",
+                    "caminho": "/financeiro"
+                },
+                {
+                    "id": "comercial",
+                    "rotulo": "Comercial",
+                    "caminho": "/comercial"
+                },
+                {
+                    "id": "pessoas",
+                    "rotulo": "Pessoas",
+                    "caminho": "/pessoas"
+                },
+                {
+                    "id": "societario",
+                    "rotulo": "Societário",
+                    "caminho": "/societario"
+                }
+            ],
+            "redireciona": {
+                "/financeiro": "owp:financeiro",
+                "/comercial": "owp:comercial",
+                "/pessoas": "owp:pessoas",
+                "/societario": "owp:financeiro"
+            }
+        },
+        {
+            "id": "financeiro",
+            "host": "financeiro.continuo.dev.br",
+            "peca": "Financeiro",
+            "audiencia": "escritório",
+            "login": null,
+            "no_ar": false,
+            "secoes": [
+                {
+                    "id": "dre",
+                    "rotulo": "DRE",
+                    "caminho": "/"
+                },
+                {
+                    "id": "fluxo-de-caixa",
+                    "rotulo": "Fluxo de caixa",
+                    "caminho": "/fluxo-de-caixa"
+                }
+            ]
+        }
+    ],
+    "institucional": {
+        "privacidade": "https://www.continuo.dev.br/privacidade/",
+        "termos_de_uso": "https://www.continuo.dev.br/termos/"
+    },
+    "apps_da_casa": [
+        {
+            "chave": "site",
+            "nome_de_exibicao": "Site"
+        },
+        {
+            "chave": "infra",
+            "nome_de_exibicao": "IDP"
+        },
+        {
+            "chave": "owp",
+            "nome_de_exibicao": "OWP"
+        }
+    ],
+    "glossario": [
+        {
+            "termo": "Objetivo de Excelência",
+            "sentido": "indicador sem penalidade",
+            "onde": "Régua de serviço, Contrato × entregue, Confiabilidade",
+            "regra": "nome inteiro, também na coluna Tipo",
+            "recusar": [
+                "Objetivo"
+            ]
+        },
+        {
+            "termo": "Objetivo (OKR)",
+            "sentido": "para onde vamos e por quê",
+            "onde": "owp.",
+            "regra": "sempre com \"(OKR)\"",
+            "recusar": [
+                "Objetivo"
+            ]
+        },
+        {
+            "termo": "Objetivo da tarefa",
+            "sentido": "categoria de trabalho do item",
+            "onde": "Central",
+            "regra": "\"Objetivo\" sozinho é recusado",
+            "recusar": [
+                "Objetivo"
+            ]
+        },
+        {
+            "termo": "Objetivo de negócio",
+            "sentido": "o resultado de negócio esperado de um Épico, escrito no refinamento",
+            "onde": "Central (refinamento do Épico)",
+            "regra": "\"Objetivo\" sozinho é recusado",
+            "recusar": [
+                "Objetivo"
+            ]
+        },
+        {
+            "termo": "Meta",
+            "sentido": "valor-alvo do que se mede",
+            "onde": "toda tabela de indicador",
+            "regra": "nunca tipo de indicador; \"Alvo\" recusado como coluna, segue como nome de campo do GitHub Project",
+            "recusar": [
+                "Alvo"
+            ]
+        },
+        {
+            "termo": "SLI, SLO, SLA e Orçamento de erro",
+            "sentido": "SLI é a disponibilidade medida pelo IDP no mês, SLO é a meta interna da Contínuo, SLA é o compromisso de disponibilidade dos termos e o orçamento de erro é a margem de falha que o SLA permite (Total, Usado e Restante)",
+            "onde": "Confiabilidade, nas Métricas SRE do mês (decisão 14, 2026-10-16)",
+            "regra": "só nessa tela e só como o IDP escreve; a consequência (meses, penalidade, exoneração) não é mostrada ao cliente",
+            "recusar": []
+        },
+        {
+            "termo": "Indicadores da versão",
+            "sentido": "a sub-aba de Novidades com as versões por dia de entrega, os itens e os indicadores de cada uma",
+            "onde": "Central, Novidades (decisão 19, 2026-10-17)",
+            "regra": "é o nome inteiro; a sigla do sistema anterior não aparece em tela",
+            "recusar": []
+        },
+        {
+            "termo": "Indicador",
+            "sentido": "chave do catálogo e rótulo do contrato",
+            "onde": "Régua, Contrato × entregue",
+            "regra": "situação só das duas listas",
+            "recusar": []
+        },
+        {
+            "termo": "Situação",
+            "sentido": "estado de um indicador",
+            "onde": "Confiabilidade (da medida); Contrato × entregue (do compromisso)",
+            "regra": "nunca as duas na mesma coluna",
+            "recusar": []
+        },
+        {
+            "termo": "Veredito",
+            "sentido": "a linha-resumo do mês de um cliente, dada pelo IDP",
+            "onde": "idp., cliente., gestao.",
+            "regra": "nunca na página de status do app, que diz \"No ar\" ou \"Fora do ar desde\"",
+            "recusar": []
+        },
+        {
+            "termo": "Incidente",
+            "sentido": "queda que a plataforma detecta",
+            "onde": "Confiabilidade",
+            "regra": "os outros: \"chamado de incidente\", \"incidente de segurança\"",
+            "recusar": []
+        },
+        {
+            "termo": "Severidade",
+            "sentido": "Crítico, Grave, Moderado",
+            "onde": "Confiabilidade, Atendimento",
+            "regra": "quem dá é a Contínuo; o cliente informa \"prioridade percebida\"; o critério vem dos termos do cliente",
+            "recusar": []
+        },
+        {
+            "termo": "Classificação de incidente de segurança",
+            "sentido": "Crítico, Grave, Moderado, Baixo",
+            "onde": "Avisos, Atendimento",
+            "regra": "campo separado da severidade",
+            "recusar": []
+        },
+        {
+            "termo": "Chamado",
+            "sentido": "pedido com prazo: Incidente ou Suporte",
+            "onde": "Solicitações, Atendimento",
+            "recusar": []
+        },
+        {
+            "termo": "Demanda",
+            "sentido": "pedido sem prazo: Alteração ou Expansão",
+            "onde": "Solicitações, Central",
+            "regra": "nunca \"chamado\"",
+            "recusar": []
+        },
+        {
+            "termo": "Nível de serviço",
+            "sentido": "grau de 1 a 5 de um domínio",
+            "onde": "Régua de serviço, www",
+            "regra": "\"tier\" recusado fora de citação",
+            "recusar": [
+                "tier"
+            ]
+        },
+        {
+            "termo": "Plano",
+            "sentido": "conjunto de níveis contratado",
+            "onde": "Contrato",
+            "regra": "nunca sinônimo de nível",
+            "recusar": []
+        },
+        {
+            "termo": "Cenário",
+            "sentido": "alternativa de proposta",
+            "onde": "gestao.",
+            "regra": "assinado, vira Plano",
+            "recusar": []
+        },
+        {
+            "termo": "Painel",
+            "sentido": "porta de uma audiência",
+            "onde": "cabeçalho, www",
+            "regra": "só do Cliente, do Parceiro, do Sócio",
+            "recusar": []
+        },
+        {
+            "termo": "Eleição do painel",
+            "sentido": "ato escrito que faz o registro no painel valer",
+            "onde": "Contrato",
+            "regra": "antes dela, vale e-mail ou termo",
+            "recusar": []
+        },
+        {
+            "termo": "Plataforma",
+            "sentido": "IDP e OWP",
+            "onde": "cabeçalho",
+            "regra": "\"hub\", \"WF Manager\", \"dashboard\" recusados",
+            "recusar": [
+                "hub",
+                "WF Manager",
+                "dashboard"
+            ]
+        },
+        {
+            "termo": "Casa",
+            "sentido": "o conjunto dos sites da Contínuo",
+            "onde": "casa.json",
+            "regra": "não vai a rótulo de tela",
+            "recusar": []
+        },
+        {
+            "termo": "Recorte",
+            "sentido": "parte de um dado que uma audiência recebe",
+            "onde": "documento ao vivo",
+            "regra": "sempre \"da equipe\", \"do cliente\" ou \"público\"",
+            "recusar": []
+        },
+        {
+            "termo": "Central",
+            "sentido": "a cadeia de Planejamento & Produção",
+            "onde": "owp., cliente.",
+            "regra": "só essa",
+            "recusar": []
+        },
+        {
+            "termo": "Pacote",
+            "sentido": "item de trabalho, ao lado de História",
+            "onde": "Central",
+            "regra": "a peça leva o nome inteiro (Pacote Laravel, Pacote React)",
+            "recusar": []
+        },
+        {
+            "termo": "Parceiro",
+            "sentido": "colaborador mais autônomo",
+            "onde": "parceiro., owp.",
+            "regra": "\"Trabalhador\" é recusado; o endereço parceiro. leva o mesmo nome",
+            "recusar": [
+                "trabalhador",
+                "trabalhadora",
+                "trabalhadores"
+            ]
+        },
+        {
+            "termo": "Sócio",
+            "sentido": "papel, que mais de uma pessoa pode ter",
+            "onde": "gestao.",
+            "regra": "\"dono\" e \"partner\" recusados",
+            "recusar": [
+                "dono",
+                "partner"
+            ]
+        },
+        {
+            "termo": "Papéis",
+            "sentido": "a lista única de papéis, com id e rótulo",
+            "onde": "Pessoas, cabeçalho",
+            "regra": "a casa copia a lista; não cria papel",
+            "recusar": []
+        },
+        {
+            "termo": "Cliente",
+            "sentido": "a organização contratante",
+            "onde": "toda tela",
+            "regra": "quem entra é \"pessoa do cliente\"",
+            "recusar": []
+        },
+        {
+            "termo": "Usuário",
+            "sentido": "usuário final do app do cliente",
+            "onde": "página de status do app",
+            "regra": "nunca quem faz login na casa",
+            "recusar": []
+        },
+        {
+            "termo": "Régua",
+            "sentido": "o aberto a todos",
+            "onde": "owp.",
+            "regra": "\"de serviço\" ou \"de trabalho\"; \"Réguas\" é só o rótulo da página que reúne as duas, \"Quem vê o quê\" e o Manual",
+            "recusar": []
+        },
+        {
+            "termo": "Perfil",
+            "sentido": "modelo que dimensiona a infraestrutura",
+            "onde": "idp.",
+            "regra": "quem vê o quê é \"perfil de acesso\"",
+            "recusar": []
+        },
+        {
+            "termo": "Ponto",
+            "sentido": "PEC",
+            "onde": "Central",
+            "regra": "contribuição é \"pontuação\"; rubrica é \"peso\"",
+            "recusar": []
+        },
+        {
+            "termo": "Extrato",
+            "sentido": "sempre com complemento",
+            "onde": "Central, parceiro.",
+            "regra": "de entregas, do acordo, de tarefas",
+            "recusar": []
+        }
+    ],
+    "situacoes_da_medida": [
+        {
+            "id": "met",
+            "rotulo": "dentro da meta"
+        },
+        {
+            "id": "missed",
+            "rotulo": "fora da meta"
+        },
+        {
+            "id": "forming",
+            "rotulo": "em formação"
+        },
+        {
+            "id": "not_measured",
+            "rotulo": "não medido"
+        },
+        {
+            "id": "no_events",
+            "rotulo": "sem ocorrências"
+        },
+        {
+            "id": "insufficient_sample",
+            "rotulo": "amostra insuficiente"
+        },
+        {
+            "id": "reported",
+            "rotulo": "informado"
+        }
+    ],
+    "situacoes_do_compromisso": [
+        {
+            "id": "cumprido",
+            "rotulo": "Cumprido"
+        },
+        {
+            "id": "em_andamento",
+            "rotulo": "Em andamento"
+        },
+        {
+            "id": "em_risco",
+            "rotulo": "Em risco"
+        },
+        {
+            "id": "descumprido",
+            "rotulo": "Descumprido"
+        },
+        {
+            "id": "exonerado",
+            "rotulo": "Exonerado"
+        },
+        {
+            "id": "sem_dado",
+            "rotulo": "Sem dado"
+        },
+        {
+            "id": "nao_aplicavel",
+            "rotulo": "Não se aplica"
+        }
+    ],
+    "traducao_de_situacao": [
+        {
+            "medida": "met",
+            "compromisso": "cumprido"
+        },
+        {
+            "medida": "no_events",
+            "compromisso": "cumprido"
+        },
+        {
+            "medida": "missed",
+            "compromisso": "descumprido",
+            "com_ato_do_socio": "exonerado"
+        },
+        {
+            "medida": "forming",
+            "compromisso": "sem_dado"
+        },
+        {
+            "medida": "insufficient_sample",
+            "compromisso": "sem_dado"
+        },
+        {
+            "medida": "not_measured",
+            "compromisso": "sem_dado"
+        }
+    ]
+}

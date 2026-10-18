@@ -1,0 +1,282 @@
+[
+ {
+  "name": "ROB",
+  "title": "Receitas Operacionais Brutas",
+  "color": "#274e13",
+  "fillable": false,
+  "left": 1,
+  "right": 10
+ },
+ {
+  "name": "ROB_RBV",
+  "title": "Receitas Brutas de Vendas",
+  "color": "#38761d",
+  "fillable": false,
+  "left": 2,
+  "right": 9
+ },
+ {
+  "name": "ROB_RBV_RMV",
+  "title": "Receitas das Mercadorias Vendidas",
+  "color": "#6aa84f",
+  "fillable": true,
+  "left": 3,
+  "right": 4
+ },
+ {
+  "name": "ROB_RBV_RPI",
+  "title": "Receitas dos Produtos Industrializados",
+  "color": "#6aa84f",
+  "fillable": true,
+  "left": 5,
+  "right": 6
+ },
+ {
+  "name": "ROB_RBV_RSP",
+  "title": "Receitas dos Serviços Prestados",
+  "color": "#6aa84f",
+  "fillable": true,
+  "left": 7,
+  "right": 8
+ },
+ {
+  "name": "DROB",
+  "title": "Deduções das Receitas Operacionais Brutas",
+  "color": "#660000",
+  "fillable": false,
+  "left": 11,
+  "right": 16
+ },
+ {
+  "name": "DROB_ISV",
+  "title": "Impostos Sobre Vendas",
+  "color": "#990000",
+  "fillable": true,
+  "left": 12,
+  "right": 13
+ },
+ {
+  "name": "DROB_DDSV",
+  "title": "Devoluções e Descontos Sobre Vendas",
+  "color": "#990000",
+  "fillable": true,
+  "left": 14,
+  "right": 15
+ },
+ {
+  "name": "CO",
+  "title": "Custos Operacionais",
+  "color": "#660000",
+  "fillable": false,
+  "left": 17,
+  "right": 36
+ },
+ {
+  "name": "CO_CMV",
+  "title": "Custos das Mercadorias Vendidas",
+  "color": "#990000",
+  "fillable": true,
+  "left": 18,
+  "right": 19
+ },
+ {
+  "name": "CO_CPV",
+  "title": "Custos dos Produtos Vendidos",
+  "color": "#990000",
+  "fillable": false,
+  "left": 20,
+  "right": 27
+ },
+ {
+  "name": "CO_CPV_MP",
+  "title": "Matéria Prima",
+  "color": "#cc0000",
+  "fillable": true,
+  "left": 21,
+  "right": 22
+ },
+ {
+  "name": "CO_CPV_MOD",
+  "title": "Mão de Obra Direta",
+  "color": "#cc0000",
+  "fillable": true,
+  "left": 23,
+  "right": 24
+ },
+ {
+  "name": "CO_CPV_CIF",
+  "title": "Custos Indiretos de Fabricação",
+  "color": "#cc0000",
+  "fillable": true,
+  "left": 25,
+  "right": 26
+ },
+ {
+  "name": "CO_CSP",
+  "title": "Custos dos Serviços Prestados",
+  "color": "#990000",
+  "fillable": false,
+  "left": 28,
+  "right": 35
+ },
+ {
+  "name": "CO_CSP_MAT",
+  "title": "Materiais",
+  "color": "#cc0000",
+  "fillable": true,
+  "left": 29,
+  "right": 30
+ },
+ {
+  "name": "CO_CSP_MO",
+  "title": "Mão de Obra",
+  "color": "#cc0000",
+  "fillable": true,
+  "left": 31,
+  "right": 32
+ },
+ {
+  "name": "CO_CSP_CIS",
+  "title": "Custos Indiretos de Serviço",
+  "color": "#cc0000",
+  "fillable": true,
+  "left": 33,
+  "right": 34
+ },
+ {
+  "name": "DO",
+  "title": "Despesas Operacionais",
+  "color": "#660000",
+  "fillable": false,
+  "left": 37,
+  "right": 46
+ },
+ {
+  "name": "DO_DC",
+  "title": "Despesas Comerciais",
+  "color": "#990000",
+  "fillable": true,
+  "left": 38,
+  "right": 39
+ },
+ {
+  "name": "DO_DA",
+  "title": "Despesas Administrativas",
+  "color": "#990000",
+  "fillable": false,
+  "left": 40,
+  "right": 45
+ },
+ {
+  "name": "DO_DA_PES",
+  "title": "Pessoal",
+  "color": "#cc0000",
+  "fillable": true,
+  "left": 41,
+  "right": 42
+ },
+ {
+  "name": "DO_DA_DGA",
+  "title": "Despesas Gerais Administrativas",
+  "color": "#cc0000",
+  "fillable": true,
+  "left": 43,
+  "right": 44
+ },
+ {
+  "name": "RFL",
+  "title": "Resultado Financeiro Líquido",
+  "color": "#7f6000",
+  "fillable": false,
+  "left": 47,
+  "right": 52
+ },
+ {
+  "name": "RFL_RF",
+  "title": "Receitas Financeiras",
+  "color": "#38761d",
+  "fillable": true,
+  "left": 48,
+  "right": 49
+ },
+ {
+  "name": "RFL_DF",
+  "title": "Despesas Financeiras",
+  "color": "#990000",
+  "fillable": true,
+  "left": 50,
+  "right": 51
+ },
+ {
+  "name": "CJS",
+  "title": "Comprometimentos de Justiça Social",
+  "color": "#660000",
+  "fillable": false,
+  "left": 53,
+  "right": 58
+ },
+ {
+  "name": "CJS_IR",
+  "title": "Impostos de Renda",
+  "color": "#990000",
+  "fillable": true,
+  "left": 54,
+  "right": 55
+ },
+ {
+  "name": "CJS_CS",
+  "title": "Contribuições Sociais",
+  "color": "#990000",
+  "fillable": true,
+  "left": 56,
+  "right": 57
+ },
+ {
+  "name": "RNO",
+  "title": "Resultados Não-Operacionais",
+  "color": "#7f6000",
+  "fillable": false,
+  "left": 59,
+  "right": 64
+ },
+ {
+  "name": "RNO_RNO",
+  "title": "Receitas Não-Operacionais",
+  "color": "#38761d",
+  "fillable": true,
+  "left": 60,
+  "right": 61
+ },
+ {
+  "name": "RNO_DNO",
+  "title": "Despesas Não-Operacionais",
+  "color": "#990000",
+  "fillable": true,
+  "left": 62,
+  "right": 63
+ },
+ {
+  "name": "AED",
+  "title": "Aportes e Distribuições",
+  "color": "#7f6000",
+  "fillable": false,
+  "left": 65,
+  "right": 70
+ },
+ {
+  "name": "AED_AC",
+  "title": "Aportes de Capital",
+  "color": "#38761d",
+  "fillable": true,
+  "left": 66,
+  "right": 67
+ },
+ {
+  "name": "AED_DL",
+  "title": "Distribuições de Lucros",
+  "color": "#990000",
+  "fillable": true,
+  "left": 68,
+  "right": 69
+ }
+]
