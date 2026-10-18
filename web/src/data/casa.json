@@ -331,7 +331,7 @@
             "peca": "Financeiro",
             "audiencia": "escritório",
             "login": null,
-            "no_ar": false,
+            "no_ar": true,
             "secoes": [
                 {
                     "id": "dre",
@@ -342,6 +342,21 @@
                     "id": "fluxo-de-caixa",
                     "rotulo": "Fluxo de caixa",
                     "caminho": "/fluxo-de-caixa"
+                }
+            ]
+        },
+        {
+            "id": "kit",
+            "host": "kit.continuo.dev.br",
+            "peca": "Kit",
+            "audiencia": "equipe",
+            "login": "github",
+            "no_ar": false,
+            "secoes": [
+                {
+                    "id": "visao-geral",
+                    "rotulo": "Visão Geral",
+                    "caminho": "/"
                 }
             ]
         }
@@ -422,6 +437,77 @@
             "sentido": "a sub-aba de Novidades com as versões por dia de entrega, os itens e os indicadores de cada uma",
             "onde": "Central, Novidades (decisão 19, 2026-10-17)",
             "regra": "é o nome inteiro; a sigla do sistema anterior não aparece em tela",
+            "recusar": []
+        },
+        {
+            "termo": "Dívida técnica",
+            "sentido": "modelo da Contínuo que pesa cada item entregue pela categoria: o que cria manutenção futura soma, o que consolida subtrai",
+            "onde": "Central: Extrato de entregas e Indicadores da versão; owp.",
+            "regra": "sempre com \"técnica\" e dita \"modelo da Contínuo\"; nunca qualidade de código, Confiabilidade nem SLA",
+            "recusar": [
+                "Débito técnico",
+                "Tech debt"
+            ]
+        },
+        {
+            "termo": "Fator da categoria",
+            "sentido": "o número que a Contínuo escreveu para a categoria (positivo cria, negativo consolida), com quem decidiu e quando",
+            "onde": "Central (Como ler, quadro de fatores); owp.",
+            "regra": "\"peso\" fica só para rubrica; categoria sem fator é dita \"sem fator\" e fica fora da conta, nunca vale 0",
+            "recusar": []
+        },
+        {
+            "termo": "UD",
+            "sentido": "unidade de dívida: fator x PEC ÷ 4",
+            "onde": "onde houver número da medida de dívida técnica",
+            "regra": "nunca \"ponto\", \"PEC\" nem \"p\"",
+            "recusar": [
+                "pts"
+            ]
+        },
+        {
+            "termo": "Saldo do período",
+            "sentido": "soma, em UD, dos itens entregues no mês: positivo criou, negativo purgou",
+            "onde": "Extrato de entregas, série e tabela da dívida técnica",
+            "regra": "só de mês fechado em Brasília; o mês em curso é \"parcial\"",
+            "recusar": []
+        },
+        {
+            "termo": "Saldo da versão",
+            "sentido": "soma, em UD, dos itens entregues naquele dia (a versão)",
+            "onde": "Indicadores da versão",
+            "regra": "a versão do mês em curso escreve \"mês em curso\" ao lado; nunca é \"do período\"",
+            "recusar": []
+        },
+        {
+            "termo": "Dívida técnica acumulada",
+            "sentido": "soma corrente dos saldos dos meses fechados, com piso em zero (convenção), desde o início da série, com a variação da janela ao lado",
+            "onde": "Extrato de entregas, cartão e linha do gráfico",
+            "regra": "lida como \"complexidade a mitigar, segundo o modelo\"; hipótese da Contínuo, não medição do código; nunca \"alto\", \"crítico\" nem \"baixo\"",
+            "recusar": []
+        },
+        {
+            "termo": "Mês acima do usual",
+            "sentido": "mês fechado com saldo e intensidade acima da referência do projeto",
+            "onde": "Extrato de entregas, faixa e cartão-resumo da dívida técnica",
+            "regra": "só mês; relativo ao projeto; provisório quando a série é curta; sem percentil e janela escritos o termo não aparece",
+            "recusar": [
+                "Grande endividamento",
+                "Mês crítico"
+            ]
+        },
+        {
+            "termo": "Referência do projeto",
+            "sentido": "percentil dos saldos (e das intensidades) dos meses com entrega da janela, na tabela de fatores em vigor",
+            "onde": "Extrato de entregas, Como ler e cartão-resumo da dívida técnica",
+            "regra": "nunca \"nível sustentável\"",
+            "recusar": []
+        },
+        {
+            "termo": "Purga",
+            "sentido": "trabalho em categoria de fator negativo que reduz o acumulado",
+            "onde": "Extrato de entregas, cartão Purga pedida",
+            "regra": "\"pedida\" e \"equivale a\"; nunca \"obrigatória\" e nunca com prazo",
             "recusar": []
         },
         {
@@ -591,6 +677,22 @@
             "recusar": []
         },
         {
+            "termo": "Logo do cliente",
+            "sentido": "a imagem do próprio cliente no cabeçalho do painel dele, um arquivo por tema",
+            "onde": "cabeçalho do Painel do Cliente, aba Cadastro do projeto no OWP",
+            "regra": "só a pessoa do cliente a vê, e só a do cliente dono do logo; nunca antes do login; sem logo, o cabeçalho traz só o nome; ausência dita, nunca imagem no lugar",
+            "recusar": [
+                "Logotipo"
+            ]
+        },
+        {
+            "termo": "Placa do logo",
+            "sentido": "o fundo neutro atrás do logo que só tem arquivo para um tema (branca para o arquivo do tema claro, de superfície escura para o do tema escuro)",
+            "onde": "cabeçalho do Painel do Cliente",
+            "regra": "só aparece quando o outro tema não tem arquivo; o mesmo arquivo nos dois temas dispensa a placa",
+            "recusar": []
+        },
+        {
             "termo": "Usuário",
             "sentido": "usuário final do app do cliente",
             "onde": "página de status do app",
@@ -623,6 +725,125 @@
             "sentido": "sempre com complemento",
             "onde": "Central, parceiro.",
             "regra": "de entregas, do acordo, de tarefas",
+            "recusar": []
+        },
+        {
+            "termo": "Histórico de código do projeto",
+            "sentido": "a fonte dos itens de um projeto que não tem quadro: os PRs mesclados e os commits diretos no ramo principal, mais as linhas do TODO.md",
+            "onde": "Central (aviso da fonte, Extrato, Backlog); owp.",
+            "regra": "é o nome da fonte e do nível de registro (\"Histórico de código\", em vez de \"Quadro\"); nunca mostra endereço do GitHub ao cliente",
+            "recusar": []
+        },
+        {
+            "termo": "Nível de registro",
+            "sentido": "o rigor com que o projeto registra o que entrega: \"Quadro\" (campos do quadro do GitHub) ou \"Histórico de código\" (título do PR, etiquetas e TODO.md)",
+            "onde": "Central; owp.",
+            "regra": "vem da fonte cadastrada, nunca é escolhido à parte; os dois valores são \"Quadro\" e \"Histórico de código\"",
+            "recusar": []
+        },
+        {
+            "termo": "A fazer",
+            "sentido": "o único estado de um item que é linha do TODO.md ainda não entregue",
+            "onde": "Central (Backlog) quando a fonte é o histórico de código",
+            "regra": "com \"Entregue\" são os dois estados dessa fonte; não tem data prevista, refinamento nem barra",
+            "recusar": []
+        },
+        {
+            "termo": "Etiqueta",
+            "sentido": "marca no PR do GitHub que diz categoria, PEC, origem ou tipo do que foi entregue",
+            "onde": "Central, página do item da equipe; Etiquetas do histórico; owp.",
+            "regra": "a etiqueta \"inferida\" propõe e não vale na dívida técnica; só a declarada vale",
+            "recusar": []
+        },
+        {
+            "termo": "Confirmado",
+            "sentido": "campo (categoria, PEC, tipo ou origem) que uma pessoa declarou, por etiqueta ou por confirmação do sócio",
+            "onde": "Cobertura do registro; owp.",
+            "regra": "\"declarado\" no dado e \"confirmado\" na tela; é afirmação da conta, não verificação de pessoa",
+            "recusar": []
+        },
+        {
+            "termo": "Confirmado em lote",
+            "sentido": "confirmação feita sobre um grupo de itens de uma vez, sem olhar cada um",
+            "onde": "Cobertura do registro; Etiquetas do histórico",
+            "regra": "sempre contado à parte do confirmado item a item",
+            "recusar": []
+        },
+        {
+            "termo": "Inferido",
+            "sentido": "valor que alguém ou o git propôs e ninguém confirmou (a palavra fix do título, a etiqueta de categoria inferida, o prefixo da branch)",
+            "onde": "Central; Cobertura do registro; owp.",
+            "regra": "nunca entra na dívida técnica nem aparece como valor ao cliente: só a contagem",
+            "recusar": []
+        },
+        {
+            "termo": "Ausente",
+            "sentido": "campo que ninguém escreveu",
+            "onde": "Central; Cobertura do registro; owp.",
+            "regra": "é dito, nunca vira zero nem valor no lugar",
+            "recusar": []
+        },
+        {
+            "termo": "Origem",
+            "sentido": "de onde veio o requisito de um item: ata de uma data, inferido no desenvolvimento ou incidente",
+            "onde": "Central (item, TODO.md, etiqueta do PR); owp.",
+            "regra": "os três valores são \"Ata de AAAA-MM-DD\", \"Inferido no desenvolvimento\" e \"Incidente\"; sem origem dita, \"origem não dita\"",
+            "recusar": []
+        },
+        {
+            "termo": "Cobertura do registro",
+            "sentido": "por mês de entrega, quantos itens têm tipo, funcionalidade, categoria, PEC e origem confirmados, inferidos ou ausentes, e quantos têm categoria e PEC confirmados",
+            "onde": "Central: Extrato de entregas, quando a fonte é o histórico de código",
+            "regra": "mede quanto do que foi entregue tem categoria e PEC confirmados, não a qualidade do que foi entregue",
+            "recusar": []
+        },
+        {
+            "termo": "Cobertura no fechamento",
+            "sentido": "a cobertura de um mês como estava quando o mês fechou",
+            "onde": "Cobertura do registro",
+            "regra": "vem ao lado da cobertura de hoje, para distinguir o etiquetado na hora do etiquetado depois",
+            "recusar": []
+        },
+        {
+            "termo": "Fechamento retroativo",
+            "sentido": "a cobertura de um mês que já estava fechado quando o projeto foi lido pela primeira vez: é a de quando o coletor chegou, não a do dia em que o mês fechou",
+            "onde": "Cobertura do registro, ao lado de Cobertura no fechamento",
+            "regra": "dito ao lado do número, nunca escondido: não prova que o registro foi feito na hora",
+            "recusar": []
+        },
+        {
+            "termo": "Parte do PEC na conta",
+            "sentido": "o PEC dos itens que entraram na conta da dívida técnica sobre o PEC dos itens elegíveis",
+            "onde": "Dívida técnica (cobertura do acumulado)",
+            "regra": "é outra razão que a \"Cobertura do registro\"; as duas nunca se chamam pelo mesmo nome",
+            "recusar": []
+        },
+        {
+            "termo": "Sem categoria confirmada",
+            "sentido": "o grupo dos itens entregues cuja categoria ninguém declarou",
+            "onde": "Extrato de entregas, agrupado por categoria",
+            "regra": "sempre à vista quando existe; nunca some do total",
+            "recusar": []
+        },
+        {
+            "termo": "Sem PEC confirmado",
+            "sentido": "o grupo dos itens entregues cujo PEC ninguém declarou",
+            "onde": "Extrato de entregas, agrupado por PEC",
+            "regra": "sempre à vista quando existe; nunca vale zero",
+            "recusar": []
+        },
+        {
+            "termo": "Sem item citado",
+            "sentido": "entrega que não apagou linha do TODO.md nem citou item",
+            "onde": "medida de melhoria, só da equipe",
+            "regra": "é indício de requisito não registrado, não declaração",
+            "recusar": []
+        },
+        {
+            "termo": "Título não mostrado",
+            "sentido": "o título de um item que a guarda de dinheiro escondeu",
+            "onde": "Central, quando a fonte é o histórico de código",
+            "regra": "o item, o tipo, a funcionalidade, o dia e a referência ficam; a contagem e a cobertura não mudam",
             "recusar": []
         }
     ],

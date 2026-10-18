@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Box } from '@mui/material';
 import { createHouseThemes } from '@ctn/base/theme';
-import { AppShell, HouseThemeProvider, NavigationProvider } from '@ctn/base/casa';
+import { AppShell, HouseIcon, HouseThemeProvider, NavigationProvider } from '@ctn/base/casa';
 import type { Casa } from './lib/casa';
 import casa from './data/casa.json';
 import { competenciaDe, deIso, paraIso } from './lib/competencia';
@@ -9,7 +9,7 @@ import type { Competencia } from './lib/competencia';
 import { enderecoDoFinanceiro, secaoDoCaminho } from './lib/casa';
 import { Dre } from './pages/Dre';
 import { FluxoDeCaixa } from './pages/FluxoDeCaixa';
-import { IconeDoFinanceiro } from './components/IconeDoFinanceiro';
+import { pecasDoFinanceiro } from './lib/pecas';
 
 const LOGO = { simbolo: '/marca-simbolo.svg', claro: '/marca-claro.svg', escuro: '/marca-escuro.svg' } as const;
 
@@ -66,7 +66,8 @@ export function App(){
             <NavigationProvider navigate={ir}>
                 <Box sx={{ maxWidth: 1200, mx: 'auto', px: { xs: 2, md: 3 }, py: 2 }}>
                     <AppShell
-                        brand={{ nome: (casa as unknown as Casa).marca.nome, logo: LOGO.claro, logoDark: LOGO.escuro, mark: LOGO.simbolo, logoAlt: (casa as unknown as Casa).marca.nome, wordmark: true, icon: <IconeDoFinanceiro/> }}
+                        brand={{ nome: (casa as unknown as Casa).marca.nome, logo: LOGO.claro, logoDark: LOGO.escuro, mark: LOGO.simbolo, logoAlt: (casa as unknown as Casa).marca.nome, wordmark: true, icon: <HouseIcon id='financeiro'/> }}
+                        switcher='brand' services={pecasDoFinanceiro(casa as unknown as Casa, 'financeiro')}
                         here={here.peca} sections={here.secoes} currentPath={secao?.caminho ?? caminho} documentTitle={`${secao?.rotulo ?? 'Financeiro'} — ${here.peca}`}>
                         {secao?.id === 'fluxo-de-caixa'
                             ? <FluxoDeCaixa desde={desde} onDesde={mudarDesde}/>

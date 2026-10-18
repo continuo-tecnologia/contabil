@@ -9,6 +9,8 @@ export interface CasaEndereco{
     id: string;
     host: string;
     peca: string;
+    /** O endereço já responde. */
+    no_ar: boolean;
     secoes: CasaSecao[];
     fora_do_menu?: CasaSecao[];
 }
