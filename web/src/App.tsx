@@ -9,6 +9,7 @@ import type { Competencia } from './lib/competencia';
 import { enderecoDoFinanceiro, secaoDoCaminho } from './lib/casa';
 import { Dre } from './pages/Dre';
 import { FluxoDeCaixa } from './pages/FluxoDeCaixa';
+import { Notas } from './pages/Notas';
 import { pecasDoFinanceiro } from './lib/pecas';
 
 const LOGO = { simbolo: '/marca-simbolo.svg', claro: '/marca-claro.svg', escuro: '/marca-escuro.svg' } as const;
@@ -71,7 +72,9 @@ export function App(){
                         here={here.peca} sections={here.secoes} currentPath={secao?.caminho ?? caminho} documentTitle={`${secao?.rotulo ?? 'Financeiro'} — ${here.peca}`}>
                         {secao?.id === 'fluxo-de-caixa'
                             ? <FluxoDeCaixa desde={desde} onDesde={mudarDesde}/>
-                            : <Dre competencia={mes} onCompetencia={mudarMes}/>}
+                            : secao?.id === 'notas'
+                                ? <Notas pedido={search.get('mes')} onMes={next => trocar('mes', next)}/>
+                                : <Dre competencia={mes} onCompetencia={mudarMes}/>}
                     </AppShell>
                 </Box>
             </NavigationProvider>

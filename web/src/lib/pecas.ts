@@ -9,7 +9,7 @@ const FRASES: Record<string, string> = {
     gestao: 'Pendências e decisões do sócio.',
     owp: 'Planejamento, atendimento, pessoas e financeiro.',
     idp: 'Entregas, confiabilidade e custos.',
-    financeiro: 'DRE e fluxo de caixa.',
+    financeiro: 'DRE, fluxo de caixa e notas fiscais.',
     cliente: 'A visão do cliente, como ele a vê.',
     kit: 'O catálogo de telas e componentes.',
 };

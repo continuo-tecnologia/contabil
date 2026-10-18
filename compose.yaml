@@ -1,5 +1,5 @@
 # financeiro (ex-contabil): React SPA (nginx) + Express API + MongoDB. The SPA container proxies /api/ to the API,
-# so only `app` is routed (Traefik labels, office IPs only) and the API and DB stay private. The address is financeiro.<DOMAIN>;
+# so only `app` is routed (Traefik labels, office IPs only, except /notas for the accounting firm: see docs/notas-colinear.md) and the API and DB stay private. The address is financeiro.<DOMAIN>;
 # contabil.<DOMAIN>, the one before, answers 301 to the same path there. Compose project, container, image and volume names
 # keep "contabil" on purpose: the Mongo volume (the data) must not change name.
 # Edge, shared network and the defaults this file extends: /srv/infra-core (CLAUDE.md there).
@@ -17,6 +17,19 @@ services:
       api: { condition: service_started }
     networks: [default, shared]
     mem_limit: ${APP_MEM_LIMIT:-32m}
+    environment:
+      # Notas fiscais da Colinear (docs/notas-colinear.md): o token do leitor `financeiro` do OWP, posto pelo nginx na chamada ao OWP. Vem do .env do
+      # servidor; vazio, a tela de notas mostra erro de leitura e o resto do financeiro. segue igual.
+      OWP_NOTAS_TOKEN: ${OWP_NOTAS_TOKEN:-}
+      DOMAIN: ${DOMAIN:?}
+    volumes:
+      # Usuário e senha da Colinear em /notas: arquivo do servidor, fora do git (htpasswd -B), só leitura. Sem o arquivo o Docker não sobe o serviço
+      # (create_host_path: false), em vez de criar uma pasta no lugar dele.
+      - type: bind
+        source: ${NOTAS_HTPASSWD:-/srv/contabil/notas.htpasswd}
+        target: /etc/nginx/notas.htpasswd
+        read_only: true
+        bind: { create_host_path: false }
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://127.0.0.1/"]
       interval: 30s
@@ -29,6 +42,12 @@ services:
       traefik.http.routers.financeiro.middlewares: office-allowlist@file
       traefik.http.routers.financeiro.service: financeiro
       traefik.http.services.financeiro.loadbalancer.server.port: "80"
+      # Notas fiscais para a Colinear: o MESMO host, só o caminho /notas (a página) e os arquivos estáticos que ela precisa, SEM a lista de IPs do escritório.
+      # O portão desses caminhos é o usuário e senha do nginx do contêiner (default.conf.template); /notas/api/ só repassa três rotas de leitura ao OWP.
+      # O router principal (acima) continua só por IP; a prioridade maior faz este ganhar nos caminhos abaixo e em nenhum outro.
+      traefik.http.routers.financeiro-notas.rule: "Host(`financeiro.${DOMAIN:?}`) && (PathPrefix(`/notas`) || PathPrefix(`/assets/`) || Path(`/favicon.svg`, `/favicon.ico`, `/apple-touch-icon.png`, `/marca-claro.svg`, `/marca-escuro.svg`, `/marca-simbolo.svg`))"
+      traefik.http.routers.financeiro-notas.priority: "1000"
+      traefik.http.routers.financeiro-notas.service: financeiro
       # The address before the rename: the same office-IP gate, then a permanent redirect (301) to the same path and query.
       traefik.http.routers.contabil.rule: "Host(`contabil.${DOMAIN:?}`)"
       traefik.http.routers.contabil.middlewares: office-allowlist@file,contabil-para-financeiro
