@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# O kit entra por tarball em web/vendor/ (veja web/vendor/KIT): é fonte do build, não artefato.
+!web/vendor/*.tgz
