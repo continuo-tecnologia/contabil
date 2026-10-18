@@ -99,3 +99,29 @@ describe('a DRE', () => {
         expect(screen.getByText('Tentar de novo')).toBeTruthy();
     });
 });
+
+describe('a DRE: percentual por mês e como ler', () => {
+
+    it('mostra o percentual da receita bruta de cada mês até o escolhido e o glossário com o mapa inferido', async () => {
+
+        vi.mocked(api.totaisDoMes).mockResolvedValue(COM_LANCAMENTO);
+        show(<Dre competencia={{ year: 2026, month: 3 }} onCompetencia={() => undefined}/>);
+
+        const table = await screen.findByTestId('percentual-tabela');
+
+        expect(within(table).getAllByRole('row')).toHaveLength(1 + 3);
+        expect(table.textContent).toContain('25,00%');
+        expect(screen.getByTestId('termo-LAIR').textContent).toMatch(/outra conta/);
+        expect(screen.getByTestId('mapa-aviso').textContent).toMatch(/Inferido/);
+    });
+
+    it('sem receita bruta em nenhum mês, diz a ausência no lugar da tabela', async () => {
+
+        vi.mocked(api.totaisDoMes).mockResolvedValue(CALCULADAS_ZERO);
+        vi.mocked(api.operacoesDoMes).mockResolvedValue([]);
+        show(<Dre competencia={{ year: 2026, month: 3 }} onCompetencia={() => undefined}/>);
+
+        expect((await screen.findByTestId('percentual-sem-receita')).textContent).toContain('Sem receita bruta em 2026');
+        expect(screen.queryByTestId('percentual-tabela')).toBeNull();
+    });
+});

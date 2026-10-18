@@ -10,6 +10,8 @@ import type { Operacao } from '../lib/fluxo';
 import { Mes } from '../components/Mes';
 import { TabelaDre, brl } from '../components/TabelaDre';
 import { Lancar } from '../components/Lancar';
+import { ComoLer } from '../components/ComoLer';
+import { PercentualPorMes } from '../components/PercentualPorMes';
 
 const mensagem = (erro: unknown): string => (erro instanceof Error ? erro.message : 'Não foi possível ler.');
 
@@ -78,6 +80,9 @@ export function Dre({ competencia, onCompetencia }: { competencia: Competencia; 
                             {!temLancamento(totals) && <Absence data-testid='mes-sem-lancamento' title={`Sem lançamento em ${rotuloDoMes(competencia)}`}>Lance uma operação numa conta para o mês ter demonstrativo.</Absence>}
                             <TabelaDre totals={totals} operations={operations} onLancar={category => set_lancando({ category })} onApagar={set_apagando}/>
                         </Block>
+
+                        <PercentualPorMes competencia={competencia}/>
+                        <ComoLer/>
                     </>
                 )}
             </AsyncState>
