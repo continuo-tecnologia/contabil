@@ -18,7 +18,7 @@ services:
     networks: [default, shared]
     mem_limit: ${APP_MEM_LIMIT:-32m}
     environment:
-      # Notas fiscais da Colinear (docs/notas-colinear.md): o token do leitor `financeiro` do OWP, posto pelo nginx na chamada ao OWP. Vem do .env do
+      # Notas fiscais da Colinear (docs/notas-colinear.md): o token do leitor `financeiro` da POPA, posto pelo nginx na chamada à POPA. Vem do .env do
       # servidor; vazio, a tela de notas mostra erro de leitura e o resto do financeiro. segue igual.
       OWP_NOTAS_TOKEN: ${OWP_NOTAS_TOKEN:-}
       DOMAIN: ${DOMAIN:?}
@@ -43,9 +43,10 @@ services:
       traefik.http.routers.financeiro.service: financeiro
       traefik.http.services.financeiro.loadbalancer.server.port: "80"
       # Notas fiscais para a Colinear: o MESMO host, só o caminho /notas (a página) e os arquivos estáticos que ela precisa, SEM a lista de IPs do escritório.
-      # O portão desses caminhos é o usuário e senha do nginx do contêiner (default.conf.template); /notas/api/ só repassa três rotas de leitura ao OWP.
+      # O portão desses caminhos é o usuário e senha do nginx do contêiner (default.conf.template); /notas/api/ só repassa três rotas de leitura à POPA.
       # O router principal (acima) continua só por IP; a prioridade maior faz este ganhar nos caminhos abaixo e em nenhum outro.
-      traefik.http.routers.financeiro-notas.rule: "Host(`financeiro.${DOMAIN:?}`) && (PathPrefix(`/notas`) || PathPrefix(`/assets/`) || Path(`/favicon.svg`, `/favicon.ico`, `/apple-touch-icon.png`, `/marca-claro.svg`, `/marca-escuro.svg`, `/marca-simbolo.svg`))"
+      # Traefik v3: Path() aceita um argumento só (com seis o router fica desligado); um Path por arquivo, unidos por ||.
+      traefik.http.routers.financeiro-notas.rule: "Host(`financeiro.${DOMAIN:?}`) && (PathPrefix(`/notas`) || PathPrefix(`/assets/`) || Path(`/favicon.svg`) || Path(`/favicon.ico`) || Path(`/apple-touch-icon.png`) || Path(`/marca-claro.svg`) || Path(`/marca-escuro.svg`) || Path(`/marca-simbolo.svg`))"
       traefik.http.routers.financeiro-notas.priority: "1000"
       traefik.http.routers.financeiro-notas.service: financeiro
       # The address before the rename: the same office-IP gate, then a permanent redirect (301) to the same path and query.
