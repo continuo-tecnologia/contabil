@@ -3,12 +3,15 @@
 A Colinear (contabilidade, externa) lê as notas fiscais **aceitas** dos parceiros em `https://financeiro.<domínio>/notas`, por **usuário e senha**
 (basic auth do nginx do financeiro.). O resto do financeiro. continua só por IP do escritório.
 
+> Este documento vale até a virada. Depois dela a porta mora no repositório `financeiro`, com o mesmo passo a passo em
+> [`docs/notas-colinear.md`](https://github.com/continuo-tecnologia/financeiro/blob/main/docs/notas-colinear.md) de lá.
+
 ## Como funciona
 
 ```
 navegador --basic auth--> Traefik (router financeiro-notas, sem ipAllowList) --> nginx do contêiner contabil
                                   nginx: confere usuário/senha, tira Cookie e Authorization do navegador, põe "Authorization: Bearer <token>"
-                                  --> workforce-manager (OWP, rede shared) /interfaces/v1/notas/...   (leitor `financeiro`)
+                                  --> OWP (contêiner workforce-manager, rede shared) /interfaces/v1/notas/...   (leitor `financeiro`)
 ```
 
 - Tela: `/notas` (a mesma SPA, seção "Notas fiscais"). Lê `/notas/api/meses.json`, `/notas/api/<AAAA-MM>.json` e abre `/notas/api/arquivo/<sha256>.pdf`.
@@ -25,17 +28,20 @@ navegador --basic auth--> Traefik (router financeiro-notas, sem ipAllowList) -->
 
 ## Passo a passo do dono (rode com `!` no Claude Code, ou direto no servidor)
 
+Já executado: em 2026-10-22, `https://financeiro.<domínio>/notas` responde 401 sem senha. Fica como registro e para refazer a porta.
+
 1. **Gerar o token do leitor** (32+ caracteres) e somar ao OWP. No servidor (ajuste os caminhos se forem outros):
 
    ```
-   ! TOKEN=$(openssl rand -hex 24); echo "$TOKEN" > /root/.notas-token.tmp; chmod 600 /root/.notas-token.tmp
+   ! TOKEN=$(openssl rand -hex 32); echo "$TOKEN" > /root/.notas-token.tmp; chmod 600 /root/.notas-token.tmp
    ```
 
-   Edite `/srv/owp/.env` (ou onde está o `.env` do OWP) e **acrescente** `financeiro:<token>` ao fim de `WFM_INTERFACE_TOKENS`, separado dos outros por
+   Edite `/srv/workforce-manager/.env` (o `.env` do OWP; a pasta e o prefixo `WFM_*` estão em troca para `/srv/owp` e `OWP_*`) e **acrescente**
+   `financeiro:<token>` ao fim de `WFM_INTERFACE_TOKENS`, separado dos outros por
    vírgula, sem apagar os leitores que já existem (por exemplo `...,financeiro:<token>`). Depois recrie só a API:
 
    ```
-   ! cd /srv/owp && docker compose up -d --force-recreate api
+   ! cd /srv/workforce-manager && docker compose up -d --force-recreate api
    ```
 
 2. **Pôr o mesmo token no `.env` do contabil**: em `/srv/contabil/.env` acrescente a linha `OWP_NOTAS_TOKEN=<o mesmo token>` (o modelo está em
@@ -75,7 +81,7 @@ Como o arquivo entra no contêiner por montagem de arquivo único e o `htpasswd`
 
 ## Girar o token do leitor
 
-1. Gere outro (`openssl rand -hex 24`), troque `financeiro:<token>` em `WFM_INTERFACE_TOKENS` do OWP e recrie a API (`docker compose up -d --force-recreate api`).
+1. Gere outro (`openssl rand -hex 32`), troque `financeiro:<token>` em `WFM_INTERFACE_TOKENS` do OWP e recrie a API (`docker compose up -d --force-recreate api`).
 2. Troque `OWP_NOTAS_TOKEN` no `.env` do contabil e recrie o app: `! cd /srv/contabil && docker compose up -d --force-recreate app`.
    Entre um passo e outro a tela de notas dá erro de leitura (segundos); o resto não é afetado.
 
