@@ -4,7 +4,10 @@ Este arquivo orienta o Claude Code neste repositório. O README diz o que a peç
 
 ## Visão geral
 
-"financeiro" (antes "contabil"): a DRE (Demonstrativo de Resultado do Exercício), o fluxo de caixa e os lançamentos. Termos, rótulos e mensagens são
+> **Descontinuado.** O app é o repositório [`financeiro`](https://github.com/continuo-tecnologia/financeiro); este repositório será arquivado
+> depois da carga do Mongo no `financeiro` e da virada (`docs/virada.md` de lá). Mudança nova vai ao `financeiro`, não aqui.
+
+"contabil", que hoje serve `financeiro.<domínio>` até a virada: a DRE (Demonstrativo de Resultado do Exercício), o fluxo de caixa e os lançamentos. Termos, rótulos e mensagens são
 pt-BR. Backend Express + Mongoose em `backend/` (não mudou); app React 19 + TypeScript + Vite em `web/`, sobre o kit `@ctn/base` (peças de `@ctn/base/casa`).
 
 ## Regras
@@ -18,4 +21,5 @@ pt-BR. Backend Express + Mongoose em `backend/` (não mudou); app React 19 + Typ
 
 ## Comandos
 
-`cd web && npm ci && npm run build:tudo` (tsc, vitest, build). `docker compose up -d --build` na raiz (precisa de `DOMAIN` e `CTN_PLATFORM_DIR`, veja o README).
+`cd web && npm ci && npm run build:tudo` (tsc, vitest, build). `docker compose up -d --build` na raiz (precisa de `DOMAIN` no `.env`; `CTN_PLATFORM_DIR` é opcional, só o `compose.yaml` o lê, com padrão
+`../infra-core`).

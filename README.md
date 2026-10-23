@@ -1,6 +1,9 @@
-# financeiro (ex-contabil)
+# contabil
 
-DRE, fluxo de caixa e lançamentos da casa. Backend Node.js/Express/MongoDB (`backend/`, intacto) e app React 19 + TypeScript
+> **Descontinuado.** O app é o repositório [`financeiro`](https://github.com/continuo-tecnologia/financeiro); este repositório será arquivado
+> depois da carga do Mongo no `financeiro` e da virada (`docs/virada.md` de lá). Mudança nova vai ao `financeiro`, não aqui.
+
+Até a virada, este app serve `financeiro.<DOMAIN>`: DRE, fluxo de caixa e lançamentos da casa. Backend Node.js/Express/MongoDB (`backend/`, intacto) e app React 19 + TypeScript
 (`web/`, Vite) sobre o kit `@ctn/base`. Endereço: `financeiro.<DOMAIN>` (só IPs do escritório); `contabil.<DOMAIN>` responde 301
 ao mesmo caminho. Finanças pessoais saíram desta peça.
 
@@ -30,13 +33,13 @@ O mapa da casa (`web/src/data/casa.json`) é uma cópia do `casa.json` do OWP, q
 ## Docker
 
 ```bash
-cp .env.example .env            # once per checkout (staging values; laptop values commented inside)
-docker compose up -d --build    # web (nginx, proxies /api/ to the API) + api + mongo
+cp .env.example .env            # uma vez por checkout (valores de staging; os do laptop vêm comentados no arquivo)
+docker compose up -d --build    # web (nginx, repassa /api/ à API) + api + mongo
 ```
 
-On ctn-srv: `/srv/deploy contabil` (the project, containers and the Mongo volume keep the name `contabil` on purpose: the data does not move).
-Routing (`financeiro.<DOMAIN>`, office IPs only, and the 301 from `contabil.<DOMAIN>`) is declared by the Traefik labels in `compose.yaml`;
-the edge lives in `/srv/infra-core`.
+No ctn-srv: `/srv/deploy contabil` (transitório, até a virada para o `financeiro`). O projeto, os contêineres e o volume do Mongo mantêm o nome
+`contabil` de propósito: os dados não mudam de lugar. O roteamento (`financeiro.<DOMAIN>`, só IPs do escritório, e o 301 de `contabil.<DOMAIN>`)
+está nos rótulos do Traefik em `compose.yaml`; a borda mora em `/srv/infra-core`.
 
 ## O que o servidor ainda tem de errado (a API foi mantida como estava)
 
