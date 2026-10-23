@@ -2,6 +2,9 @@
 
 > **Descontinuado.** O app é o repositório [`financeiro`](https://github.com/continuo-tecnologia/financeiro); este repositório será arquivado
 > depois da carga do Mongo no `financeiro` e da virada (`docs/virada.md` de lá). Mudança nova vai ao `financeiro`, não aqui.
+>
+> A virada já foi feita: em 2026-10-23, de fora, `financeiro.<DOMAIN>` responde pelo repositório `financeiro` (`/api/eu` 401, `/` 302 ao
+> login). **Não rode `/srv/deploy contabil`**: ele subiria de novo o `app` daqui, com routers no mesmo host que os do `financeiro`.
 
 Até a virada, este app serve `financeiro.<DOMAIN>`: DRE, fluxo de caixa e lançamentos da casa. Backend Node.js/Express/MongoDB (`backend/`, intacto) e app React 19 + TypeScript
 (`web/`, Vite) sobre o kit `@ctn/base`. Endereço: `financeiro.<DOMAIN>` (só IPs do escritório); `contabil.<DOMAIN>` responde 301
@@ -28,7 +31,7 @@ npm run build:tudo       # tsc, testes (vitest) e build
 ```
 
 Atualizar o kit: `frontend/vendor/atualizar-kit.sh` do repositório `infra-delivery-platform` gera o tarball a partir de um commit do `base-ui`.
-O mapa da casa (`web/src/data/casa.json`) é uma cópia do `casa.json` do OWP, que é a fonte (o endereço `financeiro` está lá); o app nunca o lê do OWP em tempo de execução.
+O mapa da casa (`web/src/data/casa.json`) é uma cópia do `casa.json` da POPA (Plataforma de Objetivos, Planejamento e Acompanhamento; antes OWP, em troca para `popa`), que é a fonte (o endereço `financeiro` está lá); o app nunca o lê da POPA em tempo de execução.
 
 ## Docker
 
